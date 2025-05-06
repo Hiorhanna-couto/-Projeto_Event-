@@ -1,0 +1,11 @@
+footer{
+    background-color: #CC3F55; /*#CC3F55*/
+    color: white;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    height: 40px;
+  
+  }
