@@ -1,6 +1,6 @@
 footer{
-    background-color: #CC3F55; /*#CC3F55*/
-    color: white;
+    background-color: #fdfdfd; /*#CC3F55*/
+    color: rgb(4, 1, 1);
   
     display: flex;
     justify-content: center;

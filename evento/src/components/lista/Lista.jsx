@@ -27,7 +27,7 @@ const Lista = (props) =>{
                  <tbody>
                    <tr className="item_lista">
                       <td data-cell="Nome">xxxxxxxxxxxx</td>
-                      <hr1/>
+                    
                        <td data-cell="Genero" style={{display:props.visibilidade}}>Acao</td>
                        <td data-cell="Editar"><img src={Editar} alt="Caneta" /></td>
                        <td data-cell="Excluir"><img src={Deletar} alt="Lixeira" /></td>

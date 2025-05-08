@@ -13,18 +13,14 @@ const CadastroEvento = () => {
                 //   placeholder = "Titulo"
                 //   visibilidade="none" 
                 />
-               <Lista
-               titulolista="LISTA TIPO DE EVENTOS"
-               visibilidade="none"
-            />
+                <Lista
+                    titulolista="LISTA TIPO DE EVENTOS"
+                    visibilidade="none"
+                />
 
             </main>
-         <Footer/>
+            <Footer />
         </>
-
-
     )
-
-
 }
 export default CadastroEvento;

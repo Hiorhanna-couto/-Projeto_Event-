@@ -1,6 +1,6 @@
 import  "./Header.css"
 import Logo from "../../assets/img/logo1.svg"
-
+import porta from"../../assets/img/portaAdmin.png"
 
 const Header = () => {
     return (
@@ -20,7 +20,7 @@ const Header = () => {
                     <a className="link_header" to="/contatos">Contatos</a>
                     <a className="link_header" to="/administrador">Administrador</a>
 
-                    <img ></img>  
+                    <img src={porta} alt=" A porta de adimi"/> 
                     
                 </nav>
 

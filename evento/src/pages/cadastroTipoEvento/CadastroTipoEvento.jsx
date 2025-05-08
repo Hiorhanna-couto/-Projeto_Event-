@@ -1,7 +1,7 @@
 import Cadastro from "../../components/cadastro/Cadastro";
 import Header from "../../components/hearder/Header";
 import Footer from "../../components/footer/Footer";
- import Lista from "../../components/lista/Lista";
+import Lista from "../../components/lista/Lista";
 
 const CadastroTipoEvento = () => {
     return (
@@ -13,14 +13,14 @@ const CadastroTipoEvento = () => {
                 //   placeholder = "Titulo"
                 //   visibilidade="none" 
                 />
-                 <Lista
-            
-             titulolista="LISTA TIPO DE EVENTOS"
-             visibilidade="none"
-            /> 
+                <Lista
+
+                    titulolista="LISTA TIPO DE EVENTOS"
+                    visibilidade="none"
+                />
 
             </main>
-             <Footer/> 
+            <Footer />
         </>
 
 

@@ -5,7 +5,7 @@ const Footer = () =>{
   return(
     <footer>
 
-    <p> © 2025 - projeto Filmes Senai - Todos os direitos reservados.</p>
+    <p> Escola Senai de Informática - 2023</p>
 
     </footer>
 
