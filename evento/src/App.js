@@ -1,17 +1,9 @@
 import './App.css';
- import Login from './pages/login/Login';
-import Header from './components/hearder/Header';
-import Footer from './components/footer/Footer';
-import Cadastro from './components/cadastro/Cadastro';
+import Routes from "./Routes/routes";
 
 function App() {
   return (
-      <Login/>
-     //<Header/>
-     //<Cadastro/>
-    // <Footer/>
-
+    <Routes/>
   );
 }
-
 export default App;

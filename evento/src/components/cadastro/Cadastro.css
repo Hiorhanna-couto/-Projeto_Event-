@@ -1,19 +1,94 @@
+
 .section_cadastro {
    
-   color: rgb(27, 11, 11);
+   background-color: rgb(251, 249, 249);
+   display: flex;
+   flex-direction: column; 
+   
  
-   padding: 50px 0 ;
+   padding: 50px 0 ; 
  
  }
- .form_cadastro h1{
+ .form_cadastro{
+   height: 30px;
+   display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
 
+ .form_cadastro h1{
+    
     text-transform: uppercase;
+    /* width: 200px; */
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    /* background-color: #de0037; */
+    color: rgb(15, 14, 14);
+    border-radius: 6px;
+    /* negrito */
+    font-weight: bolder;
+   }
+   .form_cadastro hr{
+   
+      max-width: 20%;
+      width: 35%;
+      margin-top: 7px;
+      border-width:1px ;
+      border-style:solid ;
+      border-color: #73061B;  
+   
+      margin-top: 5px;
+   
    
    }
 .campo_cad_nome input{
-    padding: 10px;
-    border: none;
-    border-bottom: 2px solid black;
-    outline: none;
+   width: 356px;
+   padding: 10px;
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+.campo_cad_nome{
+   text-decoration: none;
+   display: flex;
+   justify-content: space-around;
+   flex-direction: column;
+
+
 }
 
+
+
+
+.campos_cadastro{
+
+   display: flex;
+   margin-top: 60px;
+   /* padding-top: 60px; */
+   gap: 200px;
+
+   align-items: center;
+
+}
+
+
+@media screen and (max-width: 880px) {
+   .campos_cadastro{
+     flex-direction: column;
+     align-items: center;
+ 
+
+   }
+
+}
+@media screen and(max-width: 340px) {
+   .form_cadastro h1{
+
+       font-size: 18px;
+   }
+
+
+} 
