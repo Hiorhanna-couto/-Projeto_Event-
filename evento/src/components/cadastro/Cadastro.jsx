@@ -1,35 +1,56 @@
 import Botao from "../botao/Botao";
 import "./Cadastro.css";
-import banner1 from "../../assets/img/banner1.png"
-//   import nana from "../../assets/img/nana.png"
-//  import usuario from "../../assets/img/usuario.png"
+import Imagem from "../imagem/Imagem";
+
 
 const Cadastro = (props) => {
   return (
+    <main className="layout_grid">
+      <form  onSubmit={props.funcCadastro}    className="layout-grid form_cadastro">
+        <div className="titulo">
+          <h1>{props.tituloCadastro}</h1>
+          <hr />
+        </div>
 
-    <section className="section_cadastro">
-      <form action="" className="layout-grid form_cadastro">
-        <h1>{props.tituloCadastro}</h1>
-        <hr />
+        <section className=" layout-grid section_cadastro">
+          <div className="campos_cadastro">
+            <Imagem imagem={props.imagem} alt="Banner de Cadastro" />
+          </div>
 
-        <div className="campos_cadastro">
-          <div className="banner_cadastro" style={{ display: props.novo }}><img src={banner1} alt="Imagem" /></div>
-          {/* <div className="banner_cadastro"style={{display:props.novo1}}><img src={nana} alt="Imagem" /></div>
-                  <div className="banner_cadastro" style={{display:props.novo2}} ><img src={usuario} alt="Imagem" /></div> */}
 
           <div className="campo_cad_nome">
             <label htmlFor="titulo"></label>
-            <input type="text" name="nome" placeholder="Titulo" />
+            <input type="text" name="nome" placeholder="Nome" />
+            <input type="text" name="nome" placeholder="Data do evento" />
+      
+       <div className="campo_cad_genero" style={{ display: props.visibilidade }}>
+            <input type="text" name="nome" placeholder="Tipo Evento"/>
+            <label htmlFor="genero">Gênero </label>
+            <select name="genero" id=""
+            value={props.ValorSelect}
+            onChange={(e)=>props.setValorInput(e.target.value)}
+            >
+              <option value="" disabled selected > Selecione</option>
+              {props.lista && props.lista.length > 0 && props.lista.map((itemGenero) =>
+              <option value={itemGenero.idGenero}>{itemGenero.nome}</option>
+              
+              )}
+              
+
+            </select>
+          </div>
+            <input type="text" name="nome" placeholder="Descrição" />
             <div>
               <Botao nomeDoBotao="Cadastrar" />
             </div>
           </div>
 
-        </div>
 
+
+        </section>
       </form>
-    </section>
-
+    </main>
   )
 }
 export default Cadastro;
+

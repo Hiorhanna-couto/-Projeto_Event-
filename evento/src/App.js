@@ -1,9 +1,9 @@
 import './App.css';
-import Routes from "./Routes/routes";
+import Rotas  from "./Routes/routes";
 
 function App() {
   return (
-    <Routes/>
+    <Rotas/>
   );
 }
 export default App;

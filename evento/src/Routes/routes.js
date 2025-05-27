@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/login/Login";
 import CadastroTipoEvento from "../pages/cadastroTipoEvento/CadastroTipoEvento";
 import CadastroEvento from "../pages/cadastroEvento/CadastroEvento"
+// import CadastroTipoUsuario from "../pages/cadastroTipoUsuario/CadastroTipoUsuario";
+
 
 const Rotas = () => {
     return(
@@ -14,7 +16,11 @@ const Rotas = () => {
                 <Route path="/CadastroTipoEvento" element = {<CadastroTipoEvento/>}/> 
 
                 {/* http://localhost:3000/CadastroTipoEvento  => Cadastro de evento */}
-                {/* <Route path="/CadastroEvento" element = {<CadastroEvento/>}/>  */}
+                <Route path="/CadastroEvento" element = {<CadastroEvento/>}/> 
+                
+                {/* http://localhost:3000/CadastroTipoEvento  => Cadastro de evento
+                <Route path="/CadastroTipoUsuario" element = {<CadastroTipoUsuario/>}/>  */}
+
             </Routes>
         </BrowserRouter>
     )
