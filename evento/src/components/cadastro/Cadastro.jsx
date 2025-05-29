@@ -1,56 +1,93 @@
-import Botao from "../botao/Botao";
 import "./Cadastro.css";
+import Botao from "../botao/Botao";
 import Imagem from "../imagem/Imagem";
-
 
 const Cadastro = (props) => {
   return (
-    <main className="layout_grid">
-      <form  onSubmit={props.funcCadastro}    className="layout-grid form_cadastro">
+    <main className="layout_grid main_cadastro">
+      <form className="layout_grid form_cadastro" onSubmit={props.onSubmit}>
         <div className="titulo">
           <h1>{props.tituloCadastro}</h1>
           <hr />
         </div>
 
-        <section className=" layout-grid section_cadastro">
+        <section className="layout_grid section_cadastro">
+          <div className="banner_cadastro">
+            <Imagem imagem={props.imagem} alt="Banner do cadastro" />
+          </div>
+
           <div className="campos_cadastro">
-            <Imagem imagem={props.imagem} alt="Banner de Cadastro" />
-          </div>
 
-
-          <div className="campo_cad_nome">
-            <label htmlFor="titulo"></label>
-            <input type="text" name="nome" placeholder="Nome" />
-            <input type="text" name="nome" placeholder="Data do evento" />
-      
-       <div className="campo_cad_genero" style={{ display: props.visibilidade }}>
-            <input type="text" name="nome" placeholder="Tipo Evento"/>
-            <label htmlFor="genero">Gênero </label>
-            <select name="genero" id=""
-            value={props.ValorSelect}
-            onChange={(e)=>props.setValorInput(e.target.value)}
-            >
-              <option value="" disabled selected > Selecione</option>
-              {props.lista && props.lista.length > 0 && props.lista.map((itemGenero) =>
-              <option value={itemGenero.idGenero}>{itemGenero.nome}</option>
-              
-              )}
-              
-
-            </select>
-          </div>
-            <input type="text" name="nome" placeholder="Descrição" />
-            <div>
-              <Botao nomeDoBotao="Cadastrar" />
+            <div className="campo_padrao">
+              <label htmlFor="titulo"></label>
+              <input type="text" name="titulo" id="titulo" placeholder={props.Titulonome }
+                value={props.valor}
+                onChange={props.onChange}
+              />
             </div>
+
+            {props.tabela && (
+              <>
+                <div className="campo_padrao">
+                  <label htmlFor="data"></label>
+                  <input
+                    type="date"
+                    id="data"
+                    name="data"  // já tinha, só confirmando
+                    value={props.valorData}
+                    onChange={props.onChangeData}
+                    required
+                  />
+                </div>
+
+                <div className="campo_cad_eventos" style={{ display: props.visibilidade_instituicao }}>
+                  <select
+                    name="instituicao"
+                    value={props.valorInstituicao}
+                    onChange={(e) => props.setValorInstituicao(e.target.value)}
+                  >
+                    <option selected>Senai</option>
+                  </select>
+                </div>
+
+                <div className="campo_cad_eventos" style={{ display: props.visibilidade_tp_evento }}>
+                  <select
+                    name="tipoEvento"
+                    value={props.valorTipoEvento}
+                    onChange={(e) => props.setValorTipoEvento(e.target.value)}
+                  >
+                    <option disabled value="">Tipo Evento</option>
+                    {props.lista &&
+                      props.lista.length > 0 &&
+                      props.lista.map((itemTpEvento) => (
+                        <option key={itemTpEvento.idTipoEvento} value={itemTpEvento.idTipoEvento}>
+                          {itemTpEvento.tituloTipoEvento}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+
+                <div className="campo_cad_nome">
+                  <label htmlFor="Descricao"></label>
+                  <input
+                    type="text"
+                    name="descricao"
+                    placeholder="descricao"
+                    value={props.valorInputDescricao}
+                    style={{ display: props.visibilidade_descricao }}
+                    onChange={(e) => props.setValorInputDescricao(e.target.value)}
+                  />
+                </div>
+              </>
+            )}
+
+
+            <Botao nomeDoBotao="Cadastrar" tipo="submit"  />
           </div>
-
-
-
         </section>
       </form>
     </main>
-  )
-}
-export default Cadastro;
+  );
+};
 
+export default Cadastro;

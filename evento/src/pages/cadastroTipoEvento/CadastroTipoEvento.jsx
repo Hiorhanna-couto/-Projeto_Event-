@@ -8,9 +8,10 @@ import Footer from "../../components/footer/Footer";
 import Lista from "../../components/lista/Lista";
 import imagemTipoEvento from "../../assets/img/banner1.png";
 const CadastroTipoEvento = () => {
-     const [tipoEvento, setTipoEvento] = useState("");
+
+    const [tipoEvento, setTipoEvento] = useState("");
     const [listaTipoEvento, setListaTipoEvento] = useState([]);
-     const [atualizaTipoEvento, setAtualizarTipoEvento] = useState(false);
+
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -36,10 +37,10 @@ const CadastroTipoEvento = () => {
 
         if (tipoEvento.trim() !== "") {
             try {
-                await api.post("tiposEventos", { nome: tipoEvento });
+                await api.post("tiposEventos", { tituloTipoEvento: tipoEvento });
                 alertar("success", "Cadastro realizado com sucesso!");
                 setTipoEvento("");
-                listarTipoEvento();
+                // listarTipoEvento();
             } catch (error) {
                 alertar("error", "Erro! Entre em contato com o suporte.");
                 console.error(error);
@@ -57,7 +58,6 @@ const CadastroTipoEvento = () => {
             console.error(error);
         }
     }
-
 
     async function excluirTipoEvento(idTipoEvento) {
         const swalWithBootstrapButtons = Swal.mixin({
@@ -134,31 +134,41 @@ const CadastroTipoEvento = () => {
 
     useEffect(() => {
         listarTipoEvento();
-    }, [listaTipoEvento]);
+    }, []); 
 
     return (
         <>
             <Header />
             <main>
                 <Cadastro
-                 funcCadastro ={cadastrarTipoEvento}
-                     imagem ={imagemTipoEvento}
+                    funcCadastro={cadastrarTipoEvento}
+                    imagem={imagemTipoEvento}
                     tituloCadastro="CADASTRO TIPO DE EVENTOS"
-                     placeholder = "Titulo"
-                    visibilidade="none" 
+                    placeholder="Titulo"
+                    Titulonome="Titulo"
+                    tabela={false}
+                    visibilidade="none"
+                    // visibilidadeData="none"
+                    // visibilidade_Tevento="none"
+                    visibilidade_instituicao="none"
+                // visibilidade_descricao="none"
 
 
                 />
                 <Lista
-
-                    titulolista="LISTA TIPO DE EVENTOS"
-                    visibilidade="none"
-                    
-                    Lista ={listaTipoEvento}
-
-                      funcExcluir={excluirTipoEvento}
-                    // funcEditar={editar}
+                    tituloLista="LISTA TIPO DE EVENTOS"
+                    lista={listaTipoEvento} 
+                    chaveId="idTipoEvento" 
+                    chaveNome="tituloTipoEvento" 
+                    exibirData={false}
+                    visibilidadeGenero="none"
+                    funcExcluir={excluirTipoEvento}
+                    funcEditar={atualizarTipoEvento}
+                    funcDescricao="none"
+                   
+                    listaCadastroGenero="none"
                 />
+
 
             </main>
             <Footer />

@@ -1,134 +1,206 @@
-
 body {
-    font-family: "Poppins", sans-serif; 
-  }
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: #fff;
+  /* opcional, para melhor contraste */
+}
+
+.main_cadastro {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
 .titulo {
-    display: flex;
-    justify-content: center;
-    text-transform: uppercase;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    font-size: 13px;
-    font-family: poppins;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  margin: 50px 0;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  color: #000;
 }
 
 .titulo hr {
-    border-color: #B51D44;
-    width: 230px;
-    border-style: solid;
-    border-top-width: 2px;
-    margin-top: 10px;
-    border-radius: 2px;
+  width: 230px;
+  border-top: 2px solid #B51D44;
+  margin-top: 10px;
+  border-radius: 2px;
 }
 
+.form_cadastro {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 65px;
+}
 
 .section_cadastro {
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    height: 320px;
-    gap: 60px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* para os campos ficarem alinhados no topo */
+  justify-content: center;
+  gap: 60px;
+  color: #000;
+  /* altura flexível para evitar corte */
+  min-height: 320px;
+  width: 100%;
 }
 
-/* .banner_cadastro {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.banner_cadastro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .banner_cadastro img {
-    width: 436px;
-    height: 238px;
-} */
-
-.form_cadastro {
-    width: 100%;
-    height: 50%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 65px;
+  width: 436px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
-.campo_cad_titulo input {
-    margin-bottom: 85px;
-    padding: 5px 5px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-    font-size: 15px;
-    width: 356px;
-}
-
-.campo_tipo_evento {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 40px; 
-}
-
-.campo_tipo_evento select {
-    border: none;
-    border-bottom: 1px solid #000;
-    font-size: 15px;
-    color: #B4A9A9;
-    width: 356px;
-    font-family: 'Poppins', sans-serif;
-}
-  
-  
-  .campo_tipo_evento hr {
-    margin-top: 4px;
-    border: none;
-  }
-
-
-.campo_cad_nome input{
-   width: 356px;
-   padding: 10px;
-  border: none;
-  border-bottom: 2px solid black;
-  outline: none;
+.campos_cadastro {
+  display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
-}
-.campo_cad_nome{
-   text-decoration: none;
-   display: flex;
-   justify-content: space-around;
-   flex-direction: column;
-
-
+  align-items: flex-start;
+  /* alinhado à esquerda para os campos */
+  width: 100%;
+  max-width: 400px;
 }
 
+/* Campos padrão com label + input */
+.campo_padrao {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 15px;
+}
 
+.campo_padrao label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
 
+.campo_padrao input {
+  padding: 8px 12px;
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px solid #000;
+  outline: none;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
 
+/* Campos de selects (instituição e tipo evento) */
+.campo_cad_eventos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
 
+.campo_cad_eventos select {
+  padding: 8px 12px;
+  font-size: 15px;
+  color: #B4A9A9;
+  border: none;
+  width: 100%;
+  border-bottom: 1px solid #000;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
 
-  
-  @media (max-width: 768px) {
-    .section_cadastro {
-      flex-direction: column;
-      height: auto;
-      gap: 20px;
-    }
-  
-    .banner_cadastro {
-      display: none;
-    }
-  
-    .form_cadastro {
-      margin-bottom: 30px;
-    }
-  
-    .campo_cad_titulo input,
-    .campo_tipo_evento select {
-      width: 90%;
-    }
+/* Label para selects dentro da div campo_cad_eventos */
+/* No JSX não tem label, mas se quiser adicionar futuramente, fica aqui */
+/* Exemplo:
+.campo_cad_eventos label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #333;
+}
+*/
+
+/* Campo descrição (input simples, sem label) */
+.campo_cad_nome {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.campo_cad_nome input {
+  padding: 8px 12px;
+  font-size: 15px;
+  border: none;
+  border-bottom: 1px solid #000;
+  outline: none;
+  width: 100%;
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+/* Botão dentro do container campos */
+.campos_cadastro button {
+  margin-top: 20px;
+  align-self: center;
+  padding: 10px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  background-color: #B51D44;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.campos_cadastro button:hover {
+  background-color: #8f1530;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .section_cadastro {
+    flex-direction: column;
+    gap: 20px;
+    min-height: auto;
   }
-  
+
+  .banner_cadastro {
+    display: none;
+  }
+
+  .form_cadastro {
+    width: 90%;
+    margin-bottom: 30px;
+  }
+
+  .campos_cadastro {
+    max-width: 100%;
+  }
+
+  .campo_padrao input,
+  .campo_cad_eventos select,
+  .campo_cad_nome input {
+    width: 100%;
+  }
+
+  .titulo h1 {
+    font-size: 17px;
+  }
+
+  .campos_cadastro button {
+    width: 100%;
+  }
+}
