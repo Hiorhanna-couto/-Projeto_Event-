@@ -1,5 +1,12 @@
 /* Toogle switch */
 
+.Titulo hr{
+
+     width: 230px;
+  border-top: 2px solid #B51D44;
+  margin-top: 10px;
+  border-radius: 2px;
+}
 
 .switch {
     position: relative;

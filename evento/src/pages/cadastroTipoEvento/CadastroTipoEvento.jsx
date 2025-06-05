@@ -3,7 +3,7 @@ import api from "../../Services/services";
 import Swal from 'sweetalert2';
 
 import Cadastro from "../../components/cadastro/Cadastro";
-import Header from "../../components/hearder/Header";
+import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Lista from "../../components/lista/Lista";
 import imagemTipoEvento from "../../assets/img/banner1.png";

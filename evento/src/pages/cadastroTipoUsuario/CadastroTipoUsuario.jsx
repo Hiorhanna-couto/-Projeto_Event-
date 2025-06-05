@@ -3,7 +3,7 @@ import api from "../../Services/services"
 import Swal from 'sweetalert2';
 
 
-import Header from "../../components/hearder/Header";
+import Header from "../../components/header/Header";
 import Cadastro from "../../components/cadastro/Cadastro";
 import Footer from "../../components/footer/Footer";
 import Lista from "../../components/lista/Lista";
