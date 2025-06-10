@@ -15,7 +15,9 @@ import { format, compareAsc } from "date-fns";
 import api from "../../Services/services";
 
 const EventoAluno = () => {
+
     const [listaEventos, setlistaEventos] = useState([])
+    //Modal
     const [tipoModal, setTipoModal] = useState("");//""descricaoEvento""ou "comentario"
     const [dadosModal, setDadosModal] = useState({});//decricao ou Idevento
     const [modalAberto, setModalAberto] = useState(false);
@@ -25,34 +27,35 @@ const EventoAluno = () => {
     const [usuarioId, setUsuarioId] = useState("C5D7CA6E-FEAD-4F95-AF7D-EB0A779FD96E");
 
     async function listarEventos() {
+
         try {
             //pego todos os evento em geral
             const resposta = await api.get("eventos")
+            console.log(resposta);
             const todosOsEventos = resposta.data
-            const respostaPresenca = await api.get("PresenasEventos/ListarMinhas/" + usuarioId)
+
+            const respostaPresenca = await api.get("PresencasEventos/ListarMinhas/" + usuarioId)
+            console.log(respostaPresenca);
             const minhasPresencas = respostaPresenca.data
 
             const eventosComPresencas = todosOsEventos.map((atualEvento) => {
-                const presenca = minhasPresencas.find(p => p.idEvento === atualEvento.idEvento)
+                const presenca = minhasPresencas.find(p => p.idEvento === atualEvento.idEvento);
 
                 return {
                     //As informacoes tanto de eventos quanto de eventos que possuem presenca
                     ...atualEvento,//mantem os dados originais do evento atual
                     possuiPresenca: presenca?.situacao === true,
                     idPresenca: presenca?.idPresencaEvento || null
-
                 }
 
             })
-
-
             setlistaEventos(eventosComPresencas);//
-            // console.log(resposta.data`Informacoes de todos os evento:`);
-            // console.log(todosOsEventos);
-            // console.log(resposta.data`Informacoes de evento com presenca:`);
-            // console.log(minhasPresecas);
-            // console.log(resposta.data`Informacoes de todos os evento com presenca:`);
-            // console.log(eventosComPresencas);
+            console.log(resposta.data`Informacoes de todos os evento:`);
+            console.log(todosOsEventos);
+            console.log(resposta.data`Informacoes de evento com presenca:`);
+            console.log(minhasPresencas);
+            console.log(resposta.data`Informacoes de todos os evento com presenca:`);
+            console.log(eventosComPresencas);
         } catch (error) {
             console.log(error);
 
@@ -70,8 +73,6 @@ const EventoAluno = () => {
         setTipoModal(tipo)
         //dados
         setDadosModal(dados)
-
-
     }
 
     function fecharModal() {
@@ -80,17 +81,13 @@ const EventoAluno = () => {
         setTipoModal({});
         //dados
         setDadosModal("");
-
     }
     async function manipularPresenca(idEvento, presenca, idPresenca) {
         try {
             if (presenca && idPresenca != "") {
                 //atualizacao:situacao para FALSE
-
-                await api.put(`PresencasEventos/${idPresenca}`, { situacao: true });
+                await api.put(`PresencasEventos/${idPresenca}`, { situacao: false });
                 Swal.fire('Removido!', 'Sua presenca foi removida.', 'success');
-
-
             } else if (idPresenca != "") {
                 //atualizacao:situacao para TRUE
                 await api.put(`PresencasEventos/${idPresenca}`, { situacao: true });
@@ -103,25 +100,21 @@ const EventoAluno = () => {
             listarEventos();
         } catch (error) {
             console.log(error);
-
         }
-
-
     }
 
-    async function filtrarEventos() {
+    function filtrarEventos() {
         const hoje = new Date();
 
         return listaEventos.filter(evento => {
             const dataEvento = new Date(evento.dataEvento);
+
             if (filtroData.includes("todos")) return true;
             if (filtroData.includes("futuros") && dataEvento > hoje) return true;
             if (filtroData.includes("passados") && dataEvento > hoje) return true;
             return false;
         });
     }
-
-
     return (
         <>
             <Header />
@@ -130,12 +123,13 @@ const EventoAluno = () => {
                     <h1>Eventos</h1>
                     <hr />
                 </div>
+
                 <select onChange={(e) => setFiltroData([e.target.value])}>
                     <option value="Todos" selected>Todos os eventos</option>
                     <option value="futuros" selected>Somente Futuros</option>
                     <option value="passados" selected>Somente passados</option>
-
                 </select>
+
                 <table className='tabela_lista_eventos'>
                     <thead>
                         <tr className="th_lista_evento">
@@ -168,7 +162,8 @@ const EventoAluno = () => {
                                     </td>
                                     <td>
                                         <label className="switch">
-                                            <input type="checkbox"
+                                            <input
+                                                type="checkbox"
                                                 checked={item.possuiPresenca}
                                                 onChange={() =>
                                                     manipularPresenca(item.idEvento, item.possuiPresenca, item.idPresenca)
