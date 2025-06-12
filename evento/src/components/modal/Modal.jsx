@@ -43,8 +43,6 @@ const Modal = (props) => {
             console.log(error);
 
         }
-
-
     }
     async function deletarComentario(idComentario) {
         try {
@@ -55,10 +53,6 @@ const Modal = (props) => {
         }
 
     }
-
-
-
-
 
     return (
         <>
@@ -89,8 +83,6 @@ const Modal = (props) => {
                                     Cadastrar
                                 </button>
                             </div>
-
-
 
                         </>
                     )}

@@ -8,39 +8,18 @@ import { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 
 const CadastroEvento = () => {
-
-  const [evento, setEvento] = useState("");
-  const [listaEvento, setListaEvento] = useState([]);
-  const [listaTipoEvento, setListaTipoEvento] = useState([]);
-  const [instituicao, setInstituicao] = useState(
-    "AD11F3D7-323B-4E4C-8F04-1FC170218B69"
-  );
-  const [tipoEvento, setTipoEvento] = useState("");
-  const [dataEvento, setDataEvento] = useState("");
-  const [descricao, setDescricao] = useState("");
+   const [evento, setEvento] = useState("");
+    const [listaEvento, setListaEvento] = useState([]);
+    const [listaTipoEvento, setListaTipoEvento] = useState([]);
+    const [instituicao, setInstituicao] = useState(
+        "AD11F3D7-323B-4E4C-8F04-1FC170218B69"
+    );
+    const [tipoEvento, setTipoEvento] = useState("");
+    const [dataEvento, setDataEvento] = useState("");
+    const [descricao, setDescricao] = useState("");
 
 
     function alertar(icone, mensagem) {
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-            }
-        });
-
-        //----------alertarAAAA SUCESSO--------------------------------------------
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -52,59 +31,34 @@ const CadastroEvento = () => {
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
-        Toast.fire({
-            icon: icone,
-            title: mensagem
-        });
 
+        Toast.fire({ icon: icone, title: mensagem });
     }
 
-    async function cadastrarEvento(evt) {
-        evt.preventDefault();
-
-        console.log(dataEvento);
-        console.log(instituicao);
-        console.log(descricao);
-        console.log(tipoEvento);
-        console.log(evento);
-
-
-
-        if (evento.trim() != "") {
-
+    async function cadastrarEvento(e) {
+        e.preventDefault();
+        if (evento.trim() !== "") {
             try {
-
-                await api.post("Eventos", { nomeEvento: evento, dataEvento: dataEvento, descricao: descricao, idTipoEvento: tipoEvento, idInstituicao: instituicao });
-                alertar("success", "Cadastrado com sucesso!")
+                await api.post("Eventos", {
+                    nomeEvento: evento,
+                    dataEvento: dataEvento,
+                    descricao: descricao,
+                    idTipoEvento: tipoEvento,
+                    idInstituicao: instituicao
+                });
+                alertar("success", "Sucesso! Cadastro realizado com sucesso!");
                 setEvento("");
-                setDataEvento();
-                setDescricao("");
+                setDataEvento("");
                 setTipoEvento("");
+                setDescricao("");
                 setInstituicao("");
-
+                listarEvento();
             } catch (error) {
+                alertar("error", "Erro! Entre em contato com o suporte!");
                 console.log(error);
-                alertar("error", "Erro ao cadastrar! Entre em contato")
-                // console.log({
-                //     DataEvento: data,
-                //     NomeEvento:data, 
-                //     Descricao: descricao, 
-                //     idTipoEvento: tipoEvento, 
-                //     Instituicao: Instituicao
-                // });
             }
         } else {
-            alertar("error", "Preencha o campo!")
-        }
-    }
-
-    async function listarTipoEvento() {
-        try {
-            const resposta = await api.get("TiposEventos")
-            setListaTipoEvento(resposta.data);
-        } catch (error) {
-            console.log(error);
-
+            alertar("error", "Erro! Preencha os campos");
         }
     }
 
@@ -113,148 +67,162 @@ const CadastroEvento = () => {
             const resposta = await api.get("Eventos");
             setListaEvento(resposta.data);
         } catch (error) {
-            console.log(error);
-
+            console.error(error);
         }
     }
 
-    async function excluirEvento(eventoId) {
+    async function listarTipoEvento() {
         try {
-            Swal.fire({
-                title: "Você tem certeza?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sim, delete isso!"
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    await api.delete(`Eventos/${eventoId.idEvento}`);
-                    alertar("success", "Evento Excluido!")
-                }
-            });
+            const resposta = await api.get("TiposEventos");
+            setListaTipoEvento(resposta.data);
         } catch (error) {
-
+            console.error(error);
         }
     }
 
+    async function excluirEvento(idEvento) {
+        const result = await Swal.fire({
+            title: "Você tem certeza?",
+            text: "Não será possível reverter!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sim, deletar!",
+            cancelButtonText: "Cancelar"
+        });
 
-    async function editarEvento(evento) {
-        try {
-            const tiposOptions = listaTipoEvento
-                .map(tipo => `<option value="${tipo.idTipoEvento}" ${tipo.idTipoEvento === evento.idTipoEvento ? 'selected' : ''}>${tipo.tituloTipoEvento}</option>`)
-                .join('');
+        if (result.isConfirmed) {
+            try {
+                await api.delete(`eventos/${idEvento}`);
+                Swal.fire("Deletado!", "O evento foi deletado com sucesso.", "success");
+                listarEvento();
+            } catch (error) {
+                console.error(error);
+                Swal.fire("Erro!", "Não foi possível deletar o evento.", "error");
+            }
+        }
+    }
 
-            const { value } = await Swal.fire({
-                title: "Editar Tipo de Evento",
-                html: `
+   async function atualizarEvento(evento) {
+  try {
+    const tiposOptions = listaTipoEvento
+      .map(tipo => `<option value="${tipo.idTipoEvento}" ${tipo.idTipoEvento === evento.idTipoEvento ? 'selected' : ''}>${tipo.tituloTipoEvento}</option>`)
+      .join('');
+
+    const { value } = await Swal.fire({
+      title: "Editar Tipo de Evento",
+      html: `
         <input id="campo1" class="swal2-input" placeholder="Título" value="${evento.nomeEvento || ''}">
         <input id="campo2" class="swal2-input" type="date" value="${evento.dataEvento?.substring(0, 10) || ''}">
         <select id="campo3" class="swal2-select">${tiposOptions}</select>
         <input id="campo4" class="swal2-input" placeholder="Categoria" value="${evento.descricao || ''}">
       `,
-                showCancelButton: true,
-                confirmButtonText: "Salvar",
-                cancelButtonText: "Cancelar",
-                focusConfirm: false,
-                preConfirm: () => {
-                    const campo1 = document.getElementById("campo1").value;
-                    const campo2 = document.getElementById("campo2").value;
-                    const campo3 = document.getElementById("campo3").value;
-                    const campo4 = document.getElementById("campo4").value;
+      showCancelButton: true,
+      confirmButtonText: "Salvar",
+      cancelButtonText: "Cancelar",
+      focusConfirm: false,
+      preConfirm: () => {
+        const campo1 = document.getElementById("campo1").value;
+        const campo2 = document.getElementById("campo2").value;
+        const campo3 = document.getElementById("campo3").value;
+        const campo4 = document.getElementById("campo4").value;
 
-                    if (!campo1 || !campo2 || !campo3 || !campo4) {
-                        Swal.showValidationMessage("Preencha todos os campos.");
-                        return false;
-                    }
+        if (!campo1 || !campo2 || !campo3 || !campo4) {
+          Swal.showValidationMessage("Preencha todos os campos.");
+          return false;
+        }
 
-                    return { campo1, campo2, campo3, campo4 };
-                }
-            });
+        return { campo1, campo2, campo3, campo4 };
+      }
+    });
 
-            if (!value) {
-                console.log("Edição cancelada pelo usuário.");
-                return;
-            }
+    if (!value) {
+      console.log("Edição cancelada pelo usuário.");
+      return;
+    }
 
-            console.log("Dados para atualizar:", value);
+    console.log("Dados para atualizar:", value);
 
-            await api.put(`eventos/${evento.idEvento}`, {
-                nomeEvento: value.campo1,
-                dataEvento: value.campo2,
-                idTipoEvento: value.campo3,
-                descricao: value.campo4,
-            });
+    await api.put(`eventos/${evento.idEvento}`, {
+      nomeEvento: value.campo1,
+      dataEvento: value.campo2,
+      idTipoEvento: value.campo3,  
+      descricao: value.campo4,
+    });
 
-            console.log("Evento atualizado com sucesso!");
-            Swal.fire("Atualizado!", "Dados salvos com sucesso.", "success");
-            listarEvento();
+    console.log("Evento atualizado com sucesso!");
+    Swal.fire("Atualizado!", "Dados salvos com sucesso.", "success");
+    listarEvento();
 
+  } catch (error) {
+    console.log("Erro ao atualizar evento:", error);
+    Swal.fire("Erro!", "Não foi possível atualizar.", "error");
+  }
+}
+
+    async function DescreverEvento(idEvento) {
+        try {
+            const resposta = await api.get(`eventos/${idEvento}`);
+            const descricao = resposta.data.descricao || "Sem descrição disponível.";
+            Swal.fire({ title: "Descrição do Evento", text: descricao, icon: "info" });
         } catch (error) {
-            console.log("Erro ao atualizar evento:", error);
-            Swal.fire("Erro!", "Não foi possível atualizar.", "error");
+            console.error("Erro ao buscar descrição:", error);
+            Swal.fire("Erro!", "Não foi possível carregar a descrição.", "error");
         }
     }
-  // Descrição do evento (popup)
-  function descricaoEvento(item) {
-    Swal.fire({
-      title: item.nome,
-      icon: "info",
-      html: `<p>${item.descricao || "Sem descrição disponível."}</p><p>Data: ${item.dataEvento || "Não informado"}</p>`,
-      confirmButtonText: "Fechar",
-    });
-  }
-
 
     useEffect(() => {
-        listarTipoEvento()
-        listarEvento()
+        listarEvento();
+        listarTipoEvento();
     }, []);
 
+    return (
+        <>
+            <Header />
+            <main>
+                <Cadastro
+                    tituloCadastro="Cadastro de Evento"
+                    exibirListaCadastro={true}
+                    imagem={imagemEvento}
+                    valor={evento}
+                    visibilidadegenero="none"
+                    onChange={(e) => setEvento(e.target.value)}
+                    valorData={dataEvento}
+                    onChangeData={(e) => setDataEvento(e.target.value)}
+                    onSubmit={cadastrarEvento}
+                    lista={listaTipoEvento}
+                    valorInputDescricao={descricao}
+                    setValorInputDescricao={setDescricao}
+                    valorTipoEvento={tipoEvento}
+                    setValorTipoEvento={setTipoEvento}
+                    valorInstituicao={instituicao}
+                    setValorInstituicao={setInstituicao}
 
-  return (
-    <>
-      <Header/>
-      <main>
-        <Cadastro
-          tabela={true} // importante para exibir os campos extras
-          imagem={imagemEvento}
-          tituloCadastro="Cadastro de Evento"
-          valor={evento}
-          onChange={(e) => setEvento(e.target.value)}
-          onSubmit={cadastrarEvento}
-          Titulonome="Nome do Evento"
-          // Inputs extras
-          valorData={dataEvento}
-          onChangeData={(e) => setDataEvento(e.target.value)}
-          valorTipoEvento={tipoEvento}
-          setValorTipoEvento={setTipoEvento}
-          valorInstituicao={instituicao}
-          setValorInstituicao={setInstituicao}
-          valorInputDescricao={descricao}
-          setValorInputDescricao={setDescricao}
-          visibilidade_instituicao="block"
-          visibilidade_tp_evento="block"
-          visibilidade_descricao="block"
-          lista={listaTipoEvento}
-        />
-        <Lista
-          tituloLista="LISTA DE EVENTOS"
-          lista={listaEvento}
-          chaveId="idEvento"
-          chaveNome="nome"
-          exibirData={true}
-          visibilidadeGenero="none"
-          funcExcluir={excluirEvento}
-          funcEditar={editarEvento}
-          funcDescricao={descricaoEvento}
-          exibirSimboloDescricao={true}
-          listaCadastroGenero={true}
-        />
-      </main>
-      <Footer />
-    </>
-  );
+                />
+                <Lista
+                    tituloTipoEvento={true}
+                    exibirTipoEvento={true}
+                    tituloLista="Eventos"
+                    lista={listaEvento}
+                    funcEditar={atualizarEvento}
+                    funcDeletar={excluirEvento}
+                    funcDescricao={DescreverEvento}
+                    exibirData={true}
+                    exibirSimboloDescricao={true}
+                    visibilidadeGenero="none"
+                    tituloCadastro="none"
+                    visibilidadeTipoEvento="table-cell"
+                    listaCadastroGenero="table-cell"
+                    chaveId="idEvento"
+                    chaveNome="nomeEvento"
+                    chaveData="dataEvento"
+                    chaveTipoEvento="tiposEvento"  // <-- atenção aqui: confira o nome da propriedade vindo da API
+                />
+
+
+            </main>
+            <Footer />
+        </>
+    );
 };
 
 export default CadastroEvento;

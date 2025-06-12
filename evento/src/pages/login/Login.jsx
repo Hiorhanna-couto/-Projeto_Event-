@@ -8,12 +8,16 @@ import { UserDecodeToken } from "../../auth/Auth";
 import secureLocalStorage from "react-secure-storage";
 import { useNavigate } from 'react-router-dom';
 
+import {useAuth} from "../../contexts/AuthContext";
+
 const Login = () => {
 
   const [email, setemail] = useState("");
   const [senha, setsenha] = useState("");
 
   const navigate = useNavigate();
+
+  const { setUsuario } = useAuth();
 
   async function realizarAutenticacao(e) {
     e.preventDefault();
@@ -37,13 +41,18 @@ const Login = () => {
           timer: 1500
         });
         if (token) {
-          const tokerDecodificado = UserDecodeToken(token);
-          secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokerDecodificado));
+          const tokenDecodificado = UserDecodeToken(token);
+          
+          secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado));
+          setUsuario(tokenDecodificado);
 
-          if (tokerDecodificado.tipoUsuaria === "aluno") {
+          // console.log("O tipo de usuário e:")
+          // console.log(tokerDecodificado.tipoUsuaria)
+
+          if (tokenDecodificado.tipoUsuaria === "Aluno") {
             //redirecionar a tela de lista de evento(branco)
 
-           navigate("/Evento")
+            navigate("/Evento")
           } else {
             //ele vai me encaminhar pra tela cadastro de evento (vermelha)
             navigate("/CadastroEvento")
